@@ -1,0 +1,55 @@
+table salespersons
+	lineageTag: 74e7bd58-9058-4c7c-9569-de851bbf70d9
+
+	column salesperson_id
+		dataType: string
+		lineageTag: 8ce78d79-36ad-4107-a39d-c60646ce7575
+		summarizeBy: none
+		sourceColumn: salesperson_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column salesperson_name
+		dataType: string
+		lineageTag: a6743a0b-decd-44d9-9375-2b13e664824a
+		summarizeBy: none
+		sourceColumn: salesperson_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column branch_id
+		dataType: string
+		lineageTag: 5018cdcd-1e0d-4061-8f34-6d9d3012297f
+		summarizeBy: none
+		sourceColumn: branch_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column hire_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: eba1bd81-f9fd-40d7-88b1-3f8e75dd641a
+		summarizeBy: none
+		sourceColumn: hire_date
+
+		variation Variation
+			isDefault
+			relationship: 95c55566-60bd-488c-bd2e-4988cfa6b304
+			defaultHierarchy: LocalDateTable_3c785000-de93-4996-b28b-1464edcf3b7f.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition salespersons = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\user\דסי\עבודה\salespersons.csv"),[Delimiter=",", Columns=4, Encoding=1255, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"salesperson_id", type text}, {"salesperson_name", type text}, {"branch_id", type text}, {"hire_date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

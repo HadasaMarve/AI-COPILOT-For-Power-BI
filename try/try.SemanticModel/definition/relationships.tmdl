@@ -1,0 +1,40 @@
+relationship 95e4f33a-f45c-4223-bcbb-42bf95f31c19
+	joinOnDateBehavior: datePartOnly
+	fromColumn: customers.created_date
+	toColumn: LocalDateTable_adc0f1b6-58af-4ac2-afb2-d30cc01dcb1f.Date
+
+relationship c299e053-56dd-482c-8ca0-4067eb7a7b24
+	joinOnDateBehavior: datePartOnly
+	fromColumn: sales.sale_date
+	toColumn: LocalDateTable_b0497754-c24e-4b06-bc90-3f1929495fdd.Date
+
+relationship AutoDetected_8230b490-7817-45d9-94e1-a49036728c13
+	fromColumn: sales.customer_id
+	toColumn: customers.customer_id
+
+relationship AutoDetected_ec0bbe0a-aaf8-4135-9a64-859134641cdd
+	fromColumn: sales_items.product_id
+	toColumn: products.product_id
+
+relationship AutoDetected_9ca8fdce-77c2-4561-9054-a7677d6717de
+	fromColumn: sales_items.sale_id
+	toColumn: sales.sale_id
+
+relationship 95c55566-60bd-488c-bd2e-4988cfa6b304
+	joinOnDateBehavior: datePartOnly
+	fromColumn: salespersons.hire_date
+	toColumn: LocalDateTable_3c785000-de93-4996-b28b-1464edcf3b7f.Date
+
+relationship AutoDetected_cefbf345-0830-4ee7-9fc2-b04701629b1f
+	fromColumn: sales.salesperson_id
+	toColumn: salespersons.salesperson_id
+
+relationship AutoDetected_2ca53187-d801-443f-ad33-000ac77285ed
+	fromColumn: sales.branch_id
+	toColumn: branches.branch_id
+
+relationship AutoDetected_6732a00a-2251-4920-82c3-b0024b806408
+	isActive: false
+	fromColumn: salespersons.branch_id
+	toColumn: branches.branch_id
+

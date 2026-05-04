@@ -1,0 +1,45 @@
+table branches
+	lineageTag: f8c01aed-87ad-432e-aaf3-fd907bdf23a2
+
+	measure m_selected_branch = SELECTEDVALUE(branches[branch_id])
+		lineageTag: a03ff16d-9117-4379-8717-f39c5313f750
+
+	column branch_id
+		dataType: string
+		lineageTag: 291b53af-b68d-4d0b-b61a-d72fa431bcee
+		summarizeBy: none
+		sourceColumn: branch_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column branch_name
+		dataType: string
+		lineageTag: b51a1b7a-ac71-49da-95ed-e1243a8cfa4f
+		summarizeBy: none
+		sourceColumn: branch_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: d0f54867-2701-465b-9b6a-60ea7ba40cd8
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	partition branches = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\user\דסי\עבודה\branches.csv"),[Delimiter=",", Columns=3, Encoding=1255, QuoteStyle=QuoteStyle.None]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"branch_id", type text}, {"branch_name", type text}, {"city", type text}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

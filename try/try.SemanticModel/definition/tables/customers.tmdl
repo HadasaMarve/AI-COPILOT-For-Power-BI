@@ -1,0 +1,63 @@
+table customers
+	lineageTag: a8dcf699-b5f6-4ded-bf75-c182e56e7a3f
+
+	column customer_id
+		dataType: string
+		lineageTag: d5472aba-07ac-4120-87c9-b9618d13a020
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_name
+		dataType: string
+		lineageTag: 6e41b34d-7a75-46e6-ab9b-e4fb0b65b818
+		summarizeBy: none
+		sourceColumn: customer_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: d121f3c1-e19c-4b85-b822-8885a785eda6
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_segment
+		dataType: string
+		lineageTag: df9f26b9-90c6-4c26-8520-12bc13e4a519
+		summarizeBy: none
+		sourceColumn: customer_segment
+
+		annotation SummarizationSetBy = Automatic
+
+	column created_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c432858e-0f03-4769-b819-7c1437091210
+		summarizeBy: none
+		sourceColumn: created_date
+
+		variation Variation
+			isDefault
+			relationship: 95e4f33a-f45c-4223-bcbb-42bf95f31c19
+			defaultHierarchy: LocalDateTable_adc0f1b6-58af-4ac2-afb2-d30cc01dcb1f.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition customers = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\user\דסי\עבודה\customers.csv"),[Delimiter=",", Columns=5, Encoding=1255, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"customer_id", type text}, {"customer_name", type text}, {"city", type text}, {"customer_segment", type text}, {"created_date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

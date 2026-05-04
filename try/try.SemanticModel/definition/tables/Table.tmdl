@@ -1,0 +1,40 @@
+table Table
+	lineageTag: 8e7f9eb4-889d-42b5-95e6-a27217388c21
+
+	column salesperson_name
+		lineageTag: 2d753af7-e3d5-4ac3-945c-1b7d9cbf56a2
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: salespersons[salesperson_name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column branch_name
+		lineageTag: d361c9ed-3285-4b92-9670-eaed85496d8c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: branches[branch_name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column SUM_total_amount
+		formatString: 0
+		lineageTag: 232b09ad-77c7-4844-9029-fad4492700a5
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [SUM_total_amount]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Table = calculated
+		mode: import
+		source =
+				
+				SUMMARIZECOLUMNS(
+				'salespersons'[salesperson_name],
+				'branches'[branch_name],
+				"SUM_total_amount", SUM('sales'[total_amount])
+				)
+
+	annotation PBI_Id = 66ee04a8b30141d88a24b27e9eab13dc
+

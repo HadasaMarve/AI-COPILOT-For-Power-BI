@@ -1,0 +1,81 @@
+table sales
+	lineageTag: 687ce426-2774-438a-824f-4af746dd6744
+
+	measure m_web_url_SalesByBranchAndSalespersons = "http://localhost:8501/?chartId=" & "Sales by branch and salespersons" & "&branch=" & [m_selected_branch]
+		lineageTag: 372be8fc-5276-4451-9152-ee8d72b821d5
+
+	measure m_web_url_SalesByCustomers = "http://localhost:8501/?chartId=" & "Sales by customers" & "&branch=" & [m_selected_branch]
+		lineageTag: 241a74d2-5e3e-4972-8e33-35c1ff4246f0
+
+	measure m_web_url_quantitySoldByProduct = "http://localhost:8501/?chartId=" & "Quantity sold by product" & "&branch=" & [m_selected_branch]
+		lineageTag: 2618ca1f-94c6-498e-9238-0357279a6719
+
+	column sale_id
+		dataType: string
+		lineageTag: bffb2da3-f6f2-4d50-b797-2ebd83cc71d7
+		summarizeBy: none
+		sourceColumn: sale_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column sale_date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 454021b7-dee5-4082-be83-d1340582b312
+		summarizeBy: none
+		sourceColumn: sale_date
+
+		variation Variation
+			isDefault
+			relationship: c299e053-56dd-482c-8ca0-4067eb7a7b24
+			defaultHierarchy: LocalDateTable_b0497754-c24e-4b06-bc90-3f1929495fdd.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column customer_id
+		dataType: string
+		lineageTag: b7c81893-8449-4638-9abb-22ac75b4efcb
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column branch_id
+		dataType: string
+		lineageTag: 9a26f1d3-87a8-4715-a97b-11976b842de8
+		summarizeBy: none
+		sourceColumn: branch_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column salesperson_id
+		dataType: string
+		lineageTag: 69fbbb1b-d844-4181-9725-304b699e2455
+		summarizeBy: none
+		sourceColumn: salesperson_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_amount
+		dataType: int64
+		formatString: 0
+		lineageTag: bded75f6-e825-4139-8796-ba7ab62bbf55
+		summarizeBy: sum
+		sourceColumn: total_amount
+
+		annotation SummarizationSetBy = Automatic
+
+	partition sales = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\user\דסי\עבודה\sales.csv"),[Delimiter=",", Columns=6, Encoding=1255, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"sale_id", type text}, {"sale_date", type date}, {"customer_id", type text}, {"branch_id", type text}, {"salesperson_id", type text}, {"total_amount", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
