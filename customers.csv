@@ -1,0 +1,9 @@
+customer_id,customer_name,city,customer_segment,created_date
+C001,David Cohen,Tel Aviv,Retail,11/02/2023
+C002,Sarah Levy,Haifa,Retail,20/05/2023
+C003,Green Market Ltd,Jerusalem,Business,03/11/2022
+C004,Noa Shapiro,Ramat Gan,Retail,14/01/2024
+C005,Tech Solutions Ltd,Herzliya,Business,09/08/2022
+C006,Yossi Mizrahi,Netanya,Retail,01/06/2023
+C007,Blue Ocean Stores,Ashdod,Business,12/09/2023
+C008,Yael Ben David,Tel Aviv,Retail,04/03/2024

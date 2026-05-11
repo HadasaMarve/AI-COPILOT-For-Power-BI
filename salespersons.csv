@@ -1,0 +1,6 @@
+salesperson_id,salesperson_name,branch_id,hire_date
+S001,Ronen Katz,B001,01/03/2022
+S002,Maya Levi,B001,10/07/2023
+S003,Shai Ben Ami,B002,15/11/2021
+S004,Lior Cohen,B003,21/06/2022
+S005,Dana Mizrahi,B004,09/01/2023
